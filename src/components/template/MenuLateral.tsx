@@ -6,7 +6,7 @@ export default function MenuLateral() {
     return (
         <aside className={`
             flex flex-col
-            bg-gray-200 texte-gray-700
+            bg-gray-200 text-gray-700
             dark:bg-gray-900
         `}>
             <div className={`
