@@ -16,6 +16,7 @@ export function AppProvider(props) {
     function alternarTema() {
         setTema(tema === '' ? 'dark' : '')
     }
+    
     return( 
         <AppContext.Provider value={{
             tema,
