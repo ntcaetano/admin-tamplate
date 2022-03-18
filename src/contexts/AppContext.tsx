@@ -1,10 +1,10 @@
 import { createContext, ReactNode, useState } from "react";
 
-type Theme = "dark" | "";
+type Tema = "dark" | "";
 
 type AppContextData = {
-  theme: Theme;
-  toggleTheme: () => void;
+  tema: Tema;
+  AlternarTema: () => void;
 };
 
 type AppContextProviderProps = {
@@ -14,17 +14,16 @@ type AppContextProviderProps = {
 export const AppContext = createContext({} as AppContextData);
 
 export function AppProvider(props: AppContextProviderProps) {
-  const [theme, setTheme] = useState<Theme>("");
+  const [tema, setTema] = useState<Tema>("");
 
-  function toggleTheme() {
-    setTheme(theme === "" ? "dark" : "");
-    console.log(theme, "chamou")
+  function AlternarTema() {
+    setTema(tema === "" ? "dark" : "");
   }
   return (
     <AppContext.Provider
       value={{
-        theme,
-        toggleTheme,
+        tema,
+        AlternarTema,
       }}
     >
       {props.children}

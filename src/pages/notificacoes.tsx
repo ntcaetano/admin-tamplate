@@ -1,17 +1,13 @@
 import Layout from "../components/template/Layout";
-import { useTheme } from "../hooks/useTheme";
+import { useTema } from "../hooks/useTema";
 
 export default function Notificacoes() {
-  const { toggleTheme, theme } = useTheme();
+  const { AlternarTema, tema } = useTema();
 
   return (
-    <Layout
-      titulo="Notificações"
-      subtitulo="Aqui você irá gerenciar as suas notificações"
-    >
-    {theme}
-      {/* <h1>O tema é {theme}</h1> */}
-      <button onClick={toggleTheme}>Alternar Tema</button>
+    <Layout titulo="Notificações"
+      subtitulo="Aqui você irá gerenciar as suas notificações">
+      <h1>Notificações</h1>
     </Layout>
   );
 }

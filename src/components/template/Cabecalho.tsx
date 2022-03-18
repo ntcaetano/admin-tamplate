@@ -1,3 +1,5 @@
+import { useTema } from "../../hooks/useTema"
+import BotaoAlternarTema from './BotaoAlternarTema'
 import Titulo from './Titulo'
 
 interface CabecalhoProps{
@@ -6,9 +8,13 @@ interface CabecalhoProps{
 }
 
 export default function Cabecalho(props: CabecalhoProps) {
+    const {tema, AlternarTema} = useTema()
     return (
-        <div>
+        <div className={`flex`}> 
             <Titulo titulo={props.titulo} subtitulo={props.subtitulo}/>
+            <div className={`flex flex-grow justify-end`}>
+                <BotaoAlternarTema tema={tema} AlternarTema={AlternarTema}/>
+            </div>
         </div>
     )
 }
