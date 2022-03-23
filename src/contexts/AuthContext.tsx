@@ -6,7 +6,10 @@ import Usuario from '../model/Usuario'
 
 interface AuthContextProps {
     usuario?: Usuario
+    carregando?: boolean
     loginGoogle?: () => Promise<void>
+    login?: (email: string, senha: string) => Promise<void>
+    cadastrar?: (email: string, senha: string) => Promise<void>
     logout?: () => Promise<void>
 }
 
@@ -53,13 +56,39 @@ export function AuthProvider(props) {
         }
     }
 
+    async function login(email, senha) {
+        try {
+            setCarregando(true)
+            const resp = await firebase.auth()
+                .signInWithEmailAndPassword(email, senha)
+
+            await configurarSessao(resp.user)
+            route.push('/')
+        } finally {
+            setCarregando(false)
+        }
+    }
+
+    async function cadastrar(email, senha) {
+        try {
+            setCarregando(true)
+            const resp = await firebase.auth()
+                .createUserWithEmailAndPassword(email, senha)
+
+            await configurarSessao(resp.user)
+            route.push('/')
+        } finally {
+            setCarregando(false)
+        }
+    }
+
     async function loginGoogle() {
         try {
             setCarregando(true)
             const resp = await firebase.auth().signInWithPopup(
                 new firebase.auth.GoogleAuthProvider()
             )
-            configurarSessao(resp.user)
+            await configurarSessao(resp.user)
             route.push('/')
         } finally {
             setCarregando(false)
@@ -81,12 +110,17 @@ export function AuthProvider(props) {
         if(Cookies.get('admin-template-cod3r-auth')){
             const cancelar = firebase.auth().onIdTokenChanged(configurarSessao)
             return () => cancelar()
+        } else {
+            setCarregando(false)
         }
     }, [])
 
     return (
         <AuthContext.Provider value={{
             usuario,
+            carregando,
+            login,
+            cadastrar,
             loginGoogle,
             logout
         }}>
